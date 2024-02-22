@@ -1,39 +1,41 @@
-import React from 'react';
+"use client";
 import Link from "next/link";
-import { CiMenuBurger } from "react-icons/ci";
+import styles from './header.module.css';
+import { GrTechnology } from "react-icons/gr";
+import { useState } from "react";
+import { AiOutlineMenu } from "react-icons/ai";
+import { IoMdClose } from "react-icons/io";
 
-function NavBar() {
-    return (<div>
-        <nav>
+const Navbar = () => {
+    const [toggle, setToggle] = useState(false);
 
-<div>
-    <CiMenuBurger/>
-</div>
-            <ul className="flex flex-wrap items-center gap-4 mb-1 mt-1 ml-1 rounded-sm text-xs  p-1 text-black">
-                <li>
-                    <Link className="hover:text-fuchsia-800 " href="/"> <img
-                        src="https://i.ibb.co/f9h62Fk/Your-paragraph-text-222.png" alt="logo"
-                        className="object-cover object-center rounded-full h-5 w-5"/></Link>
-                </li>
-                <li>
-                    <Link className="hover:text-fuchsia-800 " href="/"> Home</Link>
-                </li>
-                <li>
-                    <Link className="hover:text-fuchsia-300" href="/about">About</Link>
-                </li>
-                <li>
-                    <Link className="hover:text-fuchsia-300" href="/admin">Admin Dashboard</Link>
-                </li>
-                <li>
-                    <Link className="hover:text-fuchsia-300 flex justify-end" href="/articls">Articles</Link>
-                </li>
-                <li>
-                    <Link className="hover:text-fuchsia-300" href="/login">login</Link>
-                </li>
-
-            </ul>
+    return (
+        <nav className={styles.navbar}>
+            <div>
+                <Link href="/" className={styles.logo}>
+                    CLOUD
+                    <GrTechnology />
+                    HOSTING
+                </Link>
+                <div className={styles.menu}>
+                    {toggle ? (<IoMdClose onClick={() => setToggle(prev => !prev)} />) : (<AiOutlineMenu onClick={() => setToggle(prev => !prev)} />)}
+                </div>
+            </div>
+            <div
+                className={styles.navLinksWrapper}
+                style={{
+                    clipPath: toggle && "polygon(0 0, 100% 0, 100% 100%, 0 100%)" || ""
+                }}
+            >
+                <ul className={styles.navLinks}>
+                    <Link onClick={() => setToggle(false)} className={styles.navLink} href="/">Home</Link>
+                    <Link onClick={() => setToggle(false)} className={styles.navLink} href="/articls">Articles</Link>
+                    <Link onClick={() => setToggle(false)} className={styles.navLink} href="/about">About</Link>
+                    <Link onClick={() => setToggle(false)} className={styles.navLink} href="/admin">Admin Dashboard</Link>
+                </ul>
+            </div>
         </nav>
-    </div>);
+    )
 }
 
-export default NavBar;
+export default Navbar;
